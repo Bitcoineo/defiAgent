@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from defillama import AGGREGATE_TVL_KEYS
 
 
-def build_report(protocol_detail, protocol_meta, hacks, tvl_history_days=30):
+def build_report(protocol_detail, protocol_meta, hacks, tvl_history_days=30, web_research=None):
     """Build a structured report dict from raw API data.
 
     Args:
@@ -13,8 +13,10 @@ def build_report(protocol_detail, protocol_meta, hacks, tvl_history_days=30):
         protocol_meta: Resolution dict from resolve_protocol()
         hacks: Filtered hack records for this protocol
         tvl_history_days: Number of days of TVL history to include
+        web_research: Optional dict with keys analyst_coverage, audit_reports,
+                      community_sentiment, red_flags from the web_research module
     """
-    return {
+    report = {
         "metadata": _build_metadata(protocol_detail, protocol_meta),
         "tvl": _build_tvl_section(protocol_detail, tvl_history_days),
         "chains": _build_chains_section(protocol_detail),
@@ -22,6 +24,14 @@ def build_report(protocol_detail, protocol_meta, hacks, tvl_history_days=30):
         "hacks": _build_hacks_section(hacks),
         "hallmarks": _build_hallmarks(protocol_detail),
     }
+
+    if web_research is not None:
+        report["analyst_coverage"] = _build_analyst_coverage(web_research["analyst_coverage"])
+        report["audit_security"] = _build_audit_security(web_research["audit_reports"])
+        report["community_sentiment"] = _build_community_sentiment(web_research["community_sentiment"])
+        report["red_flags"] = _build_red_flags(web_research["red_flags"])
+
+    return report
 
 
 def _build_metadata(detail, meta):
@@ -140,6 +150,26 @@ def _build_hallmarks(detail):
         for entry in raw
         if isinstance(entry, (list, tuple)) and len(entry) >= 2
     ]
+
+
+def _build_analyst_coverage(data):
+    """Format analyst coverage data for the report."""
+    return data
+
+
+def _build_audit_security(data):
+    """Format audit and security data for the report."""
+    return data
+
+
+def _build_community_sentiment(data):
+    """Format community sentiment data for the report."""
+    return data
+
+
+def _build_red_flags(data):
+    """Format red flags data for the report."""
+    return data
 
 
 def _unix_to_iso_date(ts):

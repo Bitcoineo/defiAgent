@@ -6,6 +6,12 @@ import sys
 
 from defillama import DefiLlamaClient, DefiLlamaAPIError, ProtocolNotFoundError
 from report import build_report
+from web_research import (
+    search_analyst_coverage,
+    search_audit_reports,
+    search_community_sentiment,
+    search_red_flags,
+)
 
 
 def run_report(client, protocol_name, tvl_days=30):
@@ -16,7 +22,14 @@ def run_report(client, protocol_name, tvl_days=30):
     child_names = [c["name"] for c in meta["children"]]
     hacks = client.find_hacks_for_protocol(meta["name"], child_names)
 
-    return build_report(detail, meta, hacks, tvl_history_days=tvl_days)
+    web_research = {
+        "analyst_coverage": search_analyst_coverage(meta["name"]),
+        "audit_reports": search_audit_reports(meta["name"]),
+        "community_sentiment": search_community_sentiment(meta["name"]),
+        "red_flags": search_red_flags(meta["name"]),
+    }
+
+    return build_report(detail, meta, hacks, tvl_history_days=tvl_days, web_research=web_research)
 
 
 def main():
