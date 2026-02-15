@@ -95,4 +95,4 @@ The report pipeline produces a dict with these top-level keys:
 
 ## Credits
 
-Built by [Bitcoineo](https://bitcoineo.com). Protocol data from [DeFiLlama](https://defillama.com).
+Built by [Bitcoineo](https://x.com/Bitcoineo). Protocol data from [DeFiLlama](https://defillama.com).
