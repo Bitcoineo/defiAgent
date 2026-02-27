@@ -15,7 +15,7 @@ Evaluating a DeFi protocol properly takes hours: checking TVL trends, hunting fo
 1. **Executive Summary** Verdict, global score (0-10), top risks, positive signals
 2. **On-Chain Findings** TVL, multi-chain deployment, funding history, security incidents, key events
 3. **Third-Party Intelligence** Analyst coverage, security audits, community sentiment
-4. **Red Flags Register** Sevty-ranked risk indicators
+4. **Red Flags Register** Severity-ranked risk indicators
 5. **Data Limitations** Gaps and areas needing further investigation
 
 Sample output: `reports/aave-2026-02-15.md`, `reports/lido-2026-02-15.md`
@@ -47,6 +47,7 @@ python3 web.py
 Type any protocol name or click a quick-pick card (Aave, Lido, Ethena, Uniswap, Maker). Reports render inline with markdown formatting and can be downloaded as `.md` files.
 
 ## Project Structure
+```
 main.py              CLI entry point
 web.py               Web UI server (port 8000)
 defillama.py         DeFiLlama API client with caching and fuzzy resolution
@@ -55,6 +56,7 @@ markdown_report.py   Markdown renderer
 web_research.py      Web research module
 requirements.txt     Dependencies
 reports/             Generated reports (gitignored)
+```
 
 ## Status
 
